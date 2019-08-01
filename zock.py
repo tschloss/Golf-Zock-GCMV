@@ -1,35 +1,25 @@
-input = '463540366 Helmut 16,564663406 Willy 17,575544555 Thomas 11'
+input = '574544575 Thomas 11,684856483 Peter 16'
 
- #'454553454 Thomas 11,564644465 Hans 16,603604460 Peter 16'
 
-#'074064586 Willy 16,464545085 Thomas 11,474554067 Peter 16,566454565 Rudi 11'
- 
-#'666350377 Thomas 12,706474466 Willy 18,555456486 Peter 16'
 
-#'675540050 Willy 17,464543560 Thomas 11,463573454 Rainer 13'
+coursepar =[4,5,3,4,4,3,4,5,4] #GCMV 1-9
+#coursepar = [4,4,4,3,5,4,3,5,4] #GCMV 10-18
 
-# board = [[6,7,5,5,4,0,0,5,0,'Willy',17],[4,6,4,5,4,3,5,6,0,'Thomas',11],[4, 6,3,5,7,3,4,5,4,"Rainer",13]]
-
-#[[4,5,10,5,6,3,4,4,6,'Rory', 12],[4,5,10,3,6,6,4,5,4,'Tiger',13],[5,6,6,3,4,5,5,4,4,'Dustin',11],[6,6,4,8,6,4,5,8,5,'Hacker',26]]
-
-coursepar =[4,5,3,4,4,3,4,5,4]
-#coursepar = [4,4,4,3,5,4,3,5,4]
-
-coursehcp = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6]
+coursehcp = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV
 # coursesorted = [2,1,8,4,3,7,0,5,6] # manual ;)
 
 
-def nettopts (strokes, spvg):
-	p = 0
-	for i in range(9):
-		if strokes[i] > 0:			# 0 means no result = no points
-			p0 = 2 + coursepar[i] - strokes[i]
-			if spvg > 18: 
-				p0 += 1
-			if ((spvg-1)%18)+1 >= coursehcp[i]: p0 += 1
-			if p0 > 0: p += p0
-		
-	return p
+def nettopts(strokes, spvg):
+    p = 0
+    for i in range(9):
+        p0 = 2 + coursepar[i] - strokes[i]
+        if spvg > 18:
+            p0 += 1
+        if ((spvg - 1) % 18) + 1 >= coursehcp[i]: p0 += 1
+        if p0 > 0: p += p0
+
+    return p
+	
 
 def adv_strokeplay (spvg0, spvg1):
 	# strokes: diff *3/4 - halved - +0,5 if odd
@@ -54,7 +44,7 @@ def strokeplay (strokes0, spvg0, strokes1, spvg1):
 	advantages = adv_strokeplay(spvg0,spvg1)
 	up = []
 	for hole in range(len(strokes0)):
-		if strokes0[hole] == 0 and strokes1[hole] == 0: 
+		if strokes0[hole] == 0 and strokes1[hole] ==  0:
 			up.append(0)
 		elif strokes0[hole] == 0: 
 			up.append(-1)
@@ -66,11 +56,15 @@ def strokeplay (strokes0, spvg0, strokes1, spvg1):
 				up.append(1)
 			elif p0adv < 0:
 				up.append(-1)
-			else:
+			else: 
 				up.append(0)
 	
 	return up 
 
+	
+	
+	
+	
 def prettymatch(holes):
 	prettystring=''
 	resulttxt=''
