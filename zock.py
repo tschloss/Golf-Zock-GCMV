@@ -1,4 +1,4 @@
-input = '574544575 Thomas 11,684856483 Peter 16'
+inputByPlayer = '574544575 Thomas 11,684856483 Peter 16'
 # 0 means 'no result', 'strich'
 
 
@@ -115,32 +115,37 @@ def prettyround(holes):
 		
 	return prettystring
 
-# populate board (comma between players, blank between scores/name/spvg)
-board = []
-for player in input.split(','):
-	playerf = []
-	result = player.split(' ')		# score digits / name / spvg
-	# score digits, 0 = 0 (means none)
-	for c in result[0]:
-		if (c >= '0' and c <= '9'):
-			playerf.append(ord(c)-48)
-	if len(playerf) > 9: print('Error: more than 9 scores')
-	elif len(playerf) < 9: 
-		for i in range(9 - len(playerf)): playerf.append(0)
-	
-	# name
-	playerf.append(result[1])
-	
-	# spvg
-	spvg=0
-	for c in result[2]:
-		if (c >= '0' and c <= '9'):
-			spvg = spvg * 10 + (ord(c)-48)
-	playerf.append(spvg)
-	
-	board.append(playerf)
 
+def buildBoardByPlayer (input):
+	
+	# populate board (comma between players, blank between scores/name/spvg)
+	board = []
+	for player in input.split(','):
+		playerf = []
+		result = player.split(' ')		# score digits / name / spvg
+		# score digits, 0 = 0 (means none)
+		for c in result[0]:
+			if (c >= '0' and c <= '9'):
+				playerf.append(ord(c)-48)
+		if len(playerf) > 9: print('Error: more than 9 scores')
+		elif len(playerf) < 9: 
+			for i in range(9 - len(playerf)): playerf.append(0)
+		
+		# name
+		playerf.append(result[1])
+		
+		# spvg
+		spvg=0
+		for c in result[2]:
+			if (c >= '0' and c <= '9'):
+				spvg = spvg * 10 + (ord(c)-48)
+		playerf.append(spvg)
+		
+		board.append(playerf)
+	
+	return board
 
+board = buildBoardByPlayer(inputByPlayer)
 # print(board)
 
 for player in board:
