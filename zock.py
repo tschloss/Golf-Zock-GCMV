@@ -1,5 +1,5 @@
 input = '574544575 Thomas 11,684856483 Peter 16'
-
+# 0 means 'no result', 'strich'
 
 
 coursepar =[4,5,3,4,4,3,4,5,4] #GCMV 1-9
@@ -12,12 +12,12 @@ coursehcp = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV
 def nettopts(strokes, spvg):
 	p = 0
 	for i in range(9):
-		if strokes[i] > 0:
-			p0 = 2 + coursepar[i] - strokes[i]
-			if spvg > 18:
+		if strokes[i] > 0:		# falls nicht 'strich'
+			p0 = 2 + coursepar[i] - strokes[i] # 1. brutto par = 2 usw
+			if spvg > 18:			# 2. vorgabe über 18 = extra punkt
 				p0 += 1
-			if ((spvg - 1) % 18) + 1 >= coursehcp[i]: p0 += 1
-			if p0 > 0: p += p0
+			if ((spvg - 1) % 18) + 1 >= coursehcp[i]: p0 += 1		# 3. vorgabe am loch? = extra punkt
+			if p0 > 0: p += p0		# 4. nur positive punkte addieren, negative = 0
 
 	return p
 	
