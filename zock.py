@@ -10,15 +10,16 @@ coursehcp = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV
 
 
 def nettopts(strokes, spvg):
-    p = 0
-    for i in range(9):
-        p0 = 2 + coursepar[i] - strokes[i]
-        if spvg > 18:
-            p0 += 1
-        if ((spvg - 1) % 18) + 1 >= coursehcp[i]: p0 += 1
-        if p0 > 0: p += p0
+	p = 0
+	for i in range(9):
+		if strokes[i] > 0:
+			p0 = 2 + coursepar[i] - strokes[i]
+			if spvg > 18:
+				p0 += 1
+			if ((spvg - 1) % 18) + 1 >= coursehcp[i]: p0 += 1
+			if p0 > 0: p += p0
 
-    return p
+	return p
 	
 
 def adv_strokeplay (spvg0, spvg1):
@@ -123,7 +124,9 @@ for player in input.split(','):
 	for c in result[0]:
 		if (c >= '0' and c <= '9'):
 			playerf.append(ord(c)-48)
-	if len(playerf) != 9: print('Error: not exactly 9 scores')
+	if len(playerf) > 9: print('Error: more than 9 scores')
+	elif len(playerf) < 9: 
+		for i in range(9 - len(playerf)): playerf.append(0)
 	
 	# name
 	playerf.append(result[1])
