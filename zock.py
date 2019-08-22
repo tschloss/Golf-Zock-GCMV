@@ -1,4 +1,8 @@
-inputByPlayer = '574544575 Thomas 11,684856483 Peter 16'
+inputByPlayer = '584453455 Thomas 11,674554775 Willy 17,896774676 Cengiz 26'
+#'574544575 Thomas 11,684856483 Peter 16'
+
+inputByHole = 'Tho Wil Cen,11 17 26,568 879 446 457 557 344 476 577 556'
+#'Thomas Peter,11 16,56 78 44 58 45 46 54 78 53'
 # 0 means 'no result', 'strich'
 
 
@@ -38,9 +42,6 @@ def adv_strokeplay (spvg0, spvg1):
 	return (a_s)
 		
 	
-	
-	
-	
 def strokeplay (strokes0, spvg0, strokes1, spvg1):
 	advantages = adv_strokeplay(spvg0,spvg1)
 	up = []
@@ -62,9 +63,6 @@ def strokeplay (strokes0, spvg0, strokes1, spvg1):
 	
 	return up 
 
-	
-	
-	
 	
 def prettymatch(holes):
 	prettystring=''
@@ -90,10 +88,6 @@ def prettymatch(holes):
 				resulttxt = str(abs(match)) + 'auf'
 			else:
 				resulttxt = str(abs(match)) + '+' + str(9-i)
-			
-		
-		
-		
 				
 	if match > 0: prettystring = '++gewonnen [+'+str(abs(match))+'/'+resulttxt+']++  ('+prettystring+')'
 	elif match < 0: prettystring = '--verloren [-'+str(abs(match))+'/'+resulttxt+']-- ('+prettystring+')'
@@ -145,8 +139,44 @@ def buildBoardByPlayer (input):
 	
 	return board
 
-board = buildBoardByPlayer(inputByPlayer)
-# print(board)
+def buildBoardByHole (input):
+	board = []
+	
+	sections = input.split(',') # 0:names 1:spvg 2:holebyhole
+	names = sections[0].split(' ')
+	spvgs = sections[1].split(' ')
+	holes = sections[2].split(' ')
+	
+	for player in range(len(names)):
+		playerf=[]
+		
+		# holes
+		for holestring in holes:
+			playershole = holestring[player]
+			playerf.append(ord(playershole)-48)
+		for i in range(9 - len(holes)): playerf.append(0)
+		
+		# name
+		playerf.append(names[player])
+		
+		# spvg
+		spvg=0
+		for c in spvgs[player]:
+			if (c >= '0' and c <= '9'):
+				spvg = spvg * 10 + (ord(c)-48)
+		playerf.append(spvg)
+		
+		board.append(playerf)
+		
+		
+	return board
+
+#### main ###
+
+#board = buildBoardByPlayer(inputByPlayer)
+board = buildBoardByHole(inputByHole)
+
+# print(board) ## [[1,2,..9,'name',22],[9..,,2,1,'name',11]]
 
 for player in board:
 	netto = nettopts(player[:9],player[10])
