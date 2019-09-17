@@ -1,16 +1,23 @@
 inputByPlayer = '584453455 Thomas 11,674554775 Willy 17,896774676 Cengiz 26'
 #'574544575 Thomas 11,684856483 Peter 16'
 
-inputByHole = 'Tho Wil Cen,11 17 26,568 879 446 457 557 344 476 577 556'
-#'Thomas Peter,11 16,56 78 44 58 45 46 54 78 53'
+inputByHole = 'Thomas Willy,11 17,46 56 45 55 57 44 30 75 56 60 40 56 33 67'
+# 'Thomas Rainer Willy Peter,11 13 17 16,5465 5760 4550 4565 5446 4654 5545 5577 5457'  #664 676 404 455 440 454 356 766 575'
+#'Thomas Peter,11 16,56 78 44 58 45 46 54 78 53' 
 # 0 means 'no result', 'strich'
 
 
 coursepar =[4,5,3,4,4,3,4,5,4] #GCMV 1-9
 #coursepar = [4,4,4,3,5,4,3,5,4] #GCMV 10-18
 
+
+# coursepar = [5,3,4,4,4,4,5,4,3] # Heddesheim 1-9
+# coursepar = [5,3,4,4,3,4,4,5,4]  # Heddesheim 10-18
+
 coursehcp = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV
-# coursesorted = [2,1,8,4,3,7,0,5,6] # manual ;)
+
+#coursehcp =  [11,13,3,17,7,5,1,9,15,14,16,2,18,10,4,8,6,12] # Heddesheim
+
 
 
 def nettopts(strokes, spvg):
@@ -110,6 +117,8 @@ def prettyround(holes):
 	return prettystring
 
 
+## BuildBoard = populate the internal data structure from various input options
+
 def buildBoardByPlayer (input):
 	
 	# populate board (comma between players, blank between scores/name/spvg)
@@ -129,10 +138,11 @@ def buildBoardByPlayer (input):
 		playerf.append(result[1])
 		
 		# spvg
-		spvg=0
-		for c in result[2]:
-			if (c >= '0' and c <= '9'):
-				spvg = spvg * 10 + (ord(c)-48)
+		#spvg=0
+		#for c in result[2]:
+		#	if (c >= '0' and c <= '9'):
+		#		spvg = spvg * 10 + (ord(c)-48)
+		spvg = int(result[2])
 		playerf.append(spvg)
 		
 		board.append(playerf)
@@ -160,10 +170,11 @@ def buildBoardByHole (input):
 		playerf.append(names[player])
 		
 		# spvg
-		spvg=0
-		for c in spvgs[player]:
-			if (c >= '0' and c <= '9'):
-				spvg = spvg * 10 + (ord(c)-48)
+		#spvg=0
+		#for c in spvgs[player]:
+		#	if (c >= '0' and c <= '9'):
+		#		spvg = spvg * 10 + (ord(c)-48)
+		spvg = int(spvgs[player])
 		playerf.append(spvg)
 		
 		board.append(playerf)
