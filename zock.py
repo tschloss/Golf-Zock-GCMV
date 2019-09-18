@@ -33,7 +33,7 @@ def nettopts(strokes, spvg):
 	return p
 	
 
-def adv_strokeplay (spvg0, spvg1):
+def adv_matchplay (spvg0, spvg1):
 	# strokes: diff *3/4 - halved - +0,5 if odd
 	# positive advantage = player0 receives strokes
 	advantage = round(abs(spvg0 - spvg1) * 3 / 4 + 0.1)
@@ -49,8 +49,8 @@ def adv_strokeplay (spvg0, spvg1):
 	return (a_s)
 		
 	
-def strokeplay (strokes0, spvg0, strokes1, spvg1):
-	advantages = adv_strokeplay(spvg0,spvg1)
+def matchplay (strokes0, spvg0, strokes1, spvg1):
+	advantages = adv_matchplay(spvg0,spvg1)
 	up = []
 	for hole in range(len(strokes0)):
 		if strokes0[hole] == 0 and strokes1[hole] ==  0:
@@ -196,4 +196,4 @@ for player in board:
 	for player2 in board:
 		if player2[9] != player[9]:
 			print ('   gegen ',player2[9], end='')  #( SpVg ',player2[10],')', end='')
-			print ('      ',prettymatch(strokeplay(player[:9],player[10],player2[:9],player2[10])))
+			print ('      ',prettymatch(matchplay(player[:9],player[10],player2[:9],player2[10])))
