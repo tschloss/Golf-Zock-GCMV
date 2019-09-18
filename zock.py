@@ -1,7 +1,7 @@
 inputByPlayer = '584453455 Thomas 11,674554775 Willy 17,896774676 Cengiz 26'
 #'574544575 Thomas 11,684856483 Peter 16'
 
-inputByHole = 'Thomas Willy,11 17,46 56 45 55 57 44 30 75 56 60 40 56 33 67'
+inputByHole = 'Thomas Willy,11 17,46 56 45 55 57 44 30 75 55' #60 40 56 33 67'
 # 'Thomas Rainer Willy Peter,11 13 17 16,5465 5760 4550 4565 5446 4654 5545 5577 5457'  #664 676 404 455 440 454 356 766 575'
 #'Thomas Peter,11 16,56 78 44 58 45 46 54 78 53' 
 # 0 means 'no result', 'strich'
@@ -14,9 +14,13 @@ coursepar =[4,5,3,4,4,3,4,5,4] #GCMV 1-9
 # coursepar = [5,3,4,4,4,4,5,4,3] # Heddesheim 1-9
 # coursepar = [5,3,4,4,3,4,4,5,4]  # Heddesheim 10-18
 
-coursehcp = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV
+# first 9: +1 /2  second 9: /2. if odd on first nine
+coursehcp18 = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV 
+coursehcp = [7,2,1,5,4,8,9,6,3] # GCMV 1-9
+#coursehcp = [4,6,7,9,5,1,8,2,3] # GCMV 10-18
 
-#coursehcp =  [11,13,3,17,7,5,1,9,15,14,16,2,18,10,4,8,6,12] # Heddesheim
+#coursehcp18 =  [11,13,3,17,7,5,1,9,15,14,16,2,18,10,4,8,6,12] # Heddesheim
+# [6,7,2,9,4,3,1,5,8] [7,8,1,9,5,2,4,3,6]
 
 
 
@@ -27,15 +31,42 @@ def nettopts(strokes, spvg):
 			p0 = 2 + coursepar[i] - strokes[i] # 1. brutto par = 2 usw
 			if spvg > 18:			# 2. vorgabe über 18 = extra punkt
 				p0 += 1
-			if ((spvg - 1) % 18) + 1 >= coursehcp[i]: p0 += 1		# 3. vorgabe am loch? = extra punkt
+			if ((spvg - 1) % 18) + 1 >= coursehcp18[i]: p0 += 1		# 3. vorgabe am loch? = extra punkt
 			if p0 > 0: p += p0		# 4. nur positive punkte addieren, negative = 0
 
 	return p
 	
-
 def adv_matchplay (spvg0, spvg1):
 	# strokes: diff *3/4 - halved - +0,5 if odd
 	# positive advantage = player0 receives strokes
+	# must be under 18 effektive stromes for 18
+	advantage = round(abs(spvg0 - spvg1) * 3 / 4 + 0.1) #18 holes
+	if advantage > 18: return([0,0,0,0,0,0,0,0,0]) # shoul be an error, but 0 should make it visible also
+	
+	if advantage % 2 == 1:
+		halfstroke = True
+		advantage += 1 # although on the last hole it will only be .5
+	else:
+		halfstroke = False
+	#halfstroke = (advantage % 2 == 1) # True/False
+	
+	advantage = advantage // 2 # plus halfstroke eventually 
+	if (spvg1 > spvg0): advantage *= -1
+	
+	a_s = []
+	for hole in range(9):
+		if abs(advantage) >= coursehcp[hole]:
+			a_s.append(1)
+			if (abs(advantage) == coursehcp[hole]) and halfstroke: a_s[hole] = 0.5
+			if (advantage < 0): a_s[hole] *= -1
+		else: a_s.append(0)
+	print('Vorgabevektor: ',a_s)
+	return (a_s)
+
+def _adv_matchplay (spvg0, spvg1):
+	# strokes: diff *3/4 - halved - +0,5 if odd
+	# positive advantage = player0 receives strokes
+	# this methods requires that all odd difficulties are on 1-9 and even on 10-18, better treat them seperately
 	advantage = round(abs(spvg0 - spvg1) * 3 / 4 + 0.1)
 	if (spvg1 > spvg0): advantage *= -1
 	a_s = []
