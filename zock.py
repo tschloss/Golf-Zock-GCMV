@@ -7,20 +7,19 @@ inputByHole = 'Thomas Willy,11 17,46 56 45 55 57 44 30 75 55' #60 40 56 33 67'
 # 0 means 'no result', 'strich'
 
 
-coursepar =[4,5,3,4,4,3,4,5,4] #GCMV 1-9
+#coursepar =[4,5,3,4,4,3,4,5,4] #GCMV 1-9
 #coursepar = [4,4,4,3,5,4,3,5,4] #GCMV 10-18
-
-
-# coursepar = [5,3,4,4,4,4,5,4,3] # Heddesheim 1-9
+coursepar = [5,3,4,4,4,4,5,4,3] # Heddesheim 1-9
 # coursepar = [5,3,4,4,3,4,4,5,4]  # Heddesheim 10-18
 
 # first 9: +1 /2  second 9: /2. if odd on first nine
-coursehcp18 = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV 
-coursehcp = [7,2,1,5,4,8,9,6,3] # GCMV 1-9
+#coursehcp18 = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV 
+#coursehcp = [7,2,1,5,4,8,9,6,3] # GCMV 1-9
 #coursehcp = [4,6,7,9,5,1,8,2,3] # GCMV 10-18
 
-#coursehcp18 =  [11,13,3,17,7,5,1,9,15,14,16,2,18,10,4,8,6,12] # Heddesheim
-# [6,7,2,9,4,3,1,5,8] [7,8,1,9,5,2,4,3,6]
+coursehcp18 =  [11,13,3,17,7,5,1,9,15,14,16,2,18,10,4,8,6,12] # Heddesheim
+coursehcp = [6,7,2,9,4,3,1,5,8] # Heddesheim 1-9
+#coursehcp = [7,8,1,9,5,2,4,3,6] # Heddesheim 1-18
 
 
 
@@ -60,7 +59,11 @@ def adv_matchplay (spvg0, spvg1):
 			if (abs(advantage) == coursehcp[hole]) and halfstroke: a_s[hole] = 0.5
 			if (advantage < 0): a_s[hole] *= -1
 		else: a_s.append(0)
-	print('Vorgabevektor: ',a_s)
+	
+	## todo: this print statement should not be here but in the main loop where all output is generated
+	if (spvg1 > spvg0): print(' gebe: ',prettyadvantages(a_s))
+	else: print(' bekomme: ',prettyadvantages(a_s))
+	
 	return (a_s)
 
 def _adv_matchplay (spvg0, spvg1):
@@ -147,6 +150,21 @@ def prettyround(holes):
 		
 	return prettystring
 
+def prettyadvantages (holes):
+	prettystring=''
+	i=0
+	for hole in holes:
+		if hole==0:
+			prettystring += '.'
+		elif abs(hole) == 1:
+			prettystring += '!'
+		else:
+			prettystring += ':'
+		if i in (2,5): prettystring += ' '
+		i+=1
+		
+	return prettystring
+	
 
 ## BuildBoard = populate the internal data structure from various input options
 
