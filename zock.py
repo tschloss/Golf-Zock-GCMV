@@ -1,24 +1,25 @@
 inputByPlayer = '584453455 Thomas 11,674554775 Willy 17,896774676 Cengiz 26'
 #'574544575 Thomas 11,684856483 Peter 16'
 
-inputByHole = 'Thomas Willy,11 17,46 56 45 55 57 44 30 75 55' #60 40 56 33 67'
+inputByHole = 'Thomas Peter Willy Horst,11 15 17 28,5768 5355 5750 4558 8778 5567 5678 5767 3245'
+# 'Thomas Willy,11 17,46 56 45 55 57 44 30 75 56' #60 40 56 33 67'
 # 'Thomas Rainer Willy Peter,11 13 17 16,5465 5760 4550 4565 5446 4654 5545 5577 5457'  #664 676 404 455 440 454 356 766 575'
 #'Thomas Peter,11 16,56 78 44 58 45 46 54 78 53' 
 # 0 means 'no result', 'strich'
 
-
+coursepar18 = [4,5,3,4,4,3,4,5,4,4,4,4,3,5,4,3,5,4] # GCMV
 #coursepar =[4,5,3,4,4,3,4,5,4] #GCMV 1-9
 #coursepar = [4,4,4,3,5,4,3,5,4] #GCMV 10-18
-coursepar = [5,3,4,4,4,4,5,4,3] # Heddesheim 1-9
+#coursepar = [5,3,4,4,4,4,5,4,3] # Heddesheim 1-9
 # coursepar = [5,3,4,4,3,4,4,5,4]  # Heddesheim 10-18
 
 # first 9: +1 /2  second 9: /2. if odd on first nine
-#coursehcp18 = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV 
+coursehcp18 = [13,3,1,9,7,15,17,11,5,8,12,14,18,10,2,16,4,6] #GCMV 
 #coursehcp = [7,2,1,5,4,8,9,6,3] # GCMV 1-9
 #coursehcp = [4,6,7,9,5,1,8,2,3] # GCMV 10-18
 
-coursehcp18 =  [11,13,3,17,7,5,1,9,15,14,16,2,18,10,4,8,6,12] # Heddesheim
-coursehcp = [6,7,2,9,4,3,1,5,8] # Heddesheim 1-9
+#coursehcp18 =  [11,13,3,17,7,5,1,9,15,14,16,2,18,10,4,8,6,12] # Heddesheim
+#coursehcp = [6,7,2,9,4,3,1,5,8] # Heddesheim 1-9
 #coursehcp = [7,8,1,9,5,2,4,3,6] # Heddesheim 1-18
 
 
@@ -165,6 +166,30 @@ def prettyadvantages (holes):
 		
 	return prettystring
 	
+	
+def holeranks9 (holeranks18):
+	#input: list of difficulties, lower is more difficult
+	#output-list: idx = holenumber, value tells rank starting with 1 for the most difficult
+	
+	l = []
+	for idx, value in enumerate(holeranks18):
+		#print (value,"is at",idx)
+		l.append ([value,idx]) # check how it works with tuple instad field
+
+	print(l)
+	l.sort (reverse=False) # sortieren nach den Values, niedrigster Wert zuerst, idx ist die urspgl. Position (das Loch)
+	print(l)
+
+	# jetzt mit map neuen Vektor y erzeugen ; mal mit map versuchen!?
+	y=[0,0,0,0,0,0,0,0,0] 
+	for i in range(9):
+		#y[i] = l[i][1]+1 # idx0 tells number of most difficult hole
+		y[l[i][1]] = i+1 # 
+	
+	#print("Scorekarte:",v,"Vorgabenverteilung 9:",y)
+	
+	return(y)
+
 
 ## BuildBoard = populate the internal data structure from various input options
 
@@ -235,6 +260,9 @@ def buildBoardByHole (input):
 
 #board = buildBoardByPlayer(inputByPlayer)
 board = buildBoardByHole(inputByHole)
+
+coursehcp = holeranks9(coursehcp18[:9]) # first 9 = [:9] or last 9 = [9:]
+coursepar = coursepar18[:9]
 
 # print(board) ## [[1,2,..9,'name',22],[9..,,2,1,'name',11]]
 
