@@ -1,7 +1,12 @@
 inputByPlayer = '584453455 Thomas 11,674554775 Willy 17,896774676 Cengiz 26'
 #'574544575 Thomas 11,684856483 Peter 16'
 
-inputByHole = 'Thomas Peter Willy Horst,11 15 17 28,5768 5355 5750 4558 8778 5567 5678 5767 3245'
+
+inputByHole = 'Thonmas Hans Willy Maddin Cengiz,11 17 17 11 29,65478 97757 44555 66546 45657 63544 35555 67798 57548'
+
+# 'Thomas Willy Peter,11 17 16 17,445 567 445 555 455 354 573 596 568'
+
+ # 'Thomas Peter Willy Horst,11 15 17 28,5768 5355 5750 4558 8778 5567 5678 5767 3245'
 # 'Thomas Willy,11 17,46 56 45 55 57 44 30 75 56' #60 40 56 33 67'
 # 'Thomas Rainer Willy Peter,11 13 17 16,5465 5760 4550 4565 5446 4654 5545 5577 5457'  #664 676 404 455 440 454 356 766 575'
 #'Thomas Peter,11 16,56 78 44 58 45 46 54 78 53' 
@@ -116,11 +121,11 @@ def prettymatch(holes):
 		
 		
 		if hole<0:
-			prettystring += '-'
+			prettystring += '▼'
 		elif hole>0:
-			prettystring += '+'
+			prettystring += '▲'
 		else: 
-			prettystring += '.'
+			prettystring += '◦'
 
 		if i in (2,5): prettystring += ' '
 		i+=1
@@ -131,9 +136,9 @@ def prettymatch(holes):
 			else:
 				resulttxt = str(abs(match)) + '+' + str(9-i)
 				
-	if match > 0: prettystring = '++gewonnen [+'+str(abs(match))+'/'+resulttxt+']++  ('+prettystring+')'
-	elif match < 0: prettystring = '--verloren [-'+str(abs(match))+'/'+resulttxt+']-- ('+prettystring+')'
-	else: prettystring = '   geteilt  ('+prettystring+')'
+	if match > 0: prettystring = '✔︎ gewonnen [+'+str(abs(match))+'/'+resulttxt+']  ('+prettystring+')'
+	elif match < 0: prettystring = '✘ verloren [-'+str(abs(match))+'/'+resulttxt+'] ('+prettystring+')'
+	else: prettystring = '⦁ geteilt  ('+prettystring+')'
 		
 	return prettystring
 
@@ -156,11 +161,11 @@ def prettyadvantages (holes):
 	i=0
 	for hole in holes:
 		if hole==0:
-			prettystring += '.'
+			prettystring += '◦'
 		elif abs(hole) == 1:
-			prettystring += '!'
+			prettystring += '●'
 		else:
-			prettystring += ':'
+			prettystring += '◐'
 		if i in (2,5): prettystring += ' '
 		i+=1
 		
@@ -176,9 +181,9 @@ def holeranks9 (holeranks18):
 		#print (value,"is at",idx)
 		l.append ([value,idx]) # check how it works with tuple instad field
 
-	print(l)
+	#print(l)
 	l.sort (reverse=False) # sortieren nach den Values, niedrigster Wert zuerst, idx ist die urspgl. Position (das Loch)
-	print(l)
+	#print(l)
 
 	# jetzt mit map neuen Vektor y erzeugen ; mal mit map versuchen!?
 	y=[0,0,0,0,0,0,0,0,0] 
