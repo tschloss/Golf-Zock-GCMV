@@ -1,16 +1,16 @@
-inputByPlayer = '584453455 Thomas 11,674554775 Willy 17,896774676 Cengiz 26'
+# 0 means 'no result', 'strich'
+inputByPlayer = ''
+#'584453455 Thoma 11,674554775 Will 17,896774676 Cengi 26'
 #'574544575 Thomas 11,684856483 Peter 16'
 
 
-inputByHole = 'Thonmas Hans Willy Maddin Cengiz,11 17 17 11 29,65478 97757 44555 66546 45657 63544 35555 67798 57548'
-
+inputByHole = 'Thomas Hans Willy Maddin Cengiz,11 17 17 11 29,65478 97757 44555 66546 45657 63544 35555 67798 57548'
 # 'Thomas Willy Peter,11 17 16 17,445 567 445 555 455 354 573 596 568'
-
- # 'Thomas Peter Willy Horst,11 15 17 28,5768 5355 5750 4558 8778 5567 5678 5767 3245'
+# 'Thomas Peter Willy Horst,11 15 17 28,5768 5355 5750 4558 8778 5567 5678 5767 3245'
 # 'Thomas Willy,11 17,46 56 45 55 57 44 30 75 56' #60 40 56 33 67'
 # 'Thomas Rainer Willy Peter,11 13 17 16,5465 5760 4550 4565 5446 4654 5545 5577 5457'  #664 676 404 455 440 454 356 766 575'
 #'Thomas Peter,11 16,56 78 44 58 45 46 54 78 53' 
-# 0 means 'no result', 'strich'
+
 
 coursepar18 = [4,5,3,4,4,3,4,5,4,4,4,4,3,5,4,3,5,4] # GCMV
 #coursepar =[4,5,3,4,4,3,4,5,4] #GCMV 1-9
@@ -198,10 +198,10 @@ def holeranks9 (holeranks18):
 
 ## BuildBoard = populate the internal data structure from various input options
 
-def buildBoardByPlayer (input):
+def buildBoardByPlayer (board, input):
 	
 	# populate board (comma between players, blank between scores/name/spvg)
-	board = []
+	#board = []
 	for player in input.split(','):
 		playerf = []
 		result = player.split(' ')		# score digits / name / spvg
@@ -226,10 +226,10 @@ def buildBoardByPlayer (input):
 		
 		board.append(playerf)
 	
-	return board
+	return
 
-def buildBoardByHole (input):
-	board = []
+def buildBoardByHole (board, input):
+	#board = []
 	
 	sections = input.split(',') # 0:names 1:spvg 2:holebyhole
 	names = sections[0].split(' ')
@@ -259,12 +259,14 @@ def buildBoardByHole (input):
 		board.append(playerf)
 		
 		
-	return board
+	return
 
 #### main ###
 
 #board = buildBoardByPlayer(inputByPlayer)
-board = buildBoardByHole(inputByHole)
+board = []
+if len(inputByHole) > 0: buildBoardByHole(board, inputByHole)
+if len(inputByPlayer) > 0: buildBoardByPlayer(board, inputByPlayer) 
 
 coursehcp = holeranks9(coursehcp18[:9]) # first 9 = [:9] or last 9 = [9:]
 coursepar = coursepar18[:9]
